@@ -751,32 +751,6 @@ AM_Responder
 	    rc = true;
 	}
     }
-    // [crispy] zoom and move Automap with the mouse (wheel)
-    else if (ev->type == ev_mouse && !crispy->automapoverlay && !menuactive && !inhelpscreens)
-    {
-	if (mousebprevweapon >= 0 && ev->data1 & (1 << mousebprevweapon))
-	{
-		mtof_zoommul = M2_ZOOMOUT;
-		ftom_zoommul = M2_ZOOMIN;
-		rc = true;
-	}
-	else
-	if (mousebnextweapon >= 0 && ev->data1 & (1 << mousebnextweapon))
-	{
-		mtof_zoommul = M2_ZOOMIN;
-		ftom_zoommul = M2_ZOOMOUT;
-		rc = true;
-	}
-	else
-	if (!followplayer && (ev->data2 || ev->data3))
-	{
-		// [crispy] mouse sensitivity for strafe
-		m_paninc.x = FTOM(ev->data2*(mouseSensitivity_x2+5)/80);
-		m_paninc.y = FTOM(ev->data3*(mouseSensitivity_x2+5)/80);
-		f_oldloc.y = INT_MAX;
-		rc = true;
-	}
-    }
     else if (ev->type == ev_keydown)
     {
 	rc = true;
@@ -916,6 +890,35 @@ AM_Responder
             mtof_zoommul = FRACUNIT;
             ftom_zoommul = FRACUNIT;
         }
+    }
+    // [crispy] zoom and move Automap with the mouse (wheel)
+    else if (ev->type == ev_mouse && !crispy->automapoverlay && !menuactive && !inhelpscreens)
+    {
+	if (mousebprevweapon >= 0 && ev->data1 & (1 << mousebprevweapon))
+	{
+		mtof_zoommul = M2_ZOOMOUT;
+		ftom_zoommul = M2_ZOOMIN;
+		rc = true;
+	}
+	else
+	if (mousebnextweapon >= 0 && ev->data1 & (1 << mousebnextweapon))
+	{
+		mtof_zoommul = M2_ZOOMIN;
+		ftom_zoommul = M2_ZOOMOUT;
+		rc = true;
+	}
+	else
+	if (!followplayer && (ev->data2 || ev->data3))
+	{
+		// [crispy] mouse sensitivity for strafe
+		m_paninc.x = FTOM(ev->data2*(mouseSensitivity_x2+5)/80);
+		m_paninc.y = FTOM(ev->data3*(mouseSensitivity_x2+5)/80);
+		if (m_paninc.x || m_paninc.y)
+		{
+			f_oldloc.y = INT_MAX;
+			rc = true;
+		}
+	}
     }
 
     return rc;
