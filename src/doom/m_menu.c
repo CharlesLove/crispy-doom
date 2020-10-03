@@ -1304,22 +1304,19 @@ void M_ChooseSkill(int choice)
     
     // Check for -episodemode
     // TODO: Make sure this only happens for Doom 2.
-    // TODO: Make sure nerve and master episodes work
     if(crispy->episodemode){
         if(epi+1 == 1){
-            G_DeferedInitNew(choice,epi+1,1);
+            G_DeferedInitNew(choice,1,1);
         }
         else if(epi+1 == 2){
-            G_DeferedInitNew(choice,epi+1,12);
+            G_DeferedInitNew(choice,1,12);
         }
         else if(epi+1 == 3){
-            G_DeferedInitNew(choice,epi+1,21);
+            G_DeferedInitNew(choice,1,21);
         }
-        else if(epi+1 == 4){
-            G_DeferedInitNew(choice,2,1);
-        }
-        else if(epi+1 == 5){
-            G_DeferedInitNew(choice,3,1);
+        // Handle NERVE and Master Levels
+        else{
+            G_DeferedInitNew(choice,epi-1,1);
         }
     }
     else{
