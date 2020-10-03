@@ -1315,6 +1315,12 @@ void M_ChooseSkill(int choice)
         else if(epi+1 == 3){
             G_DeferedInitNew(choice,epi+1,21);
         }
+        else if(epi+1 == 4){
+            G_DeferedInitNew(choice,2,1);
+        }
+        else if(epi+1 == 5){
+            G_DeferedInitNew(choice,3,1);
+        }
     }
     else{
         G_DeferedInitNew(choice,epi+1,1);
