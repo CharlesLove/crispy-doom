@@ -339,7 +339,7 @@ menuitem_t NewGameMenu[]=
     {1,"M_ROUGH",	M_ChooseSkill, 'h', "Hey, not too rough!."},
     {1,"M_HURT",	M_ChooseSkill, 'h', "Hurt me plenty."},
     {1,"M_ULTRA",	M_ChooseSkill, 'u', "Ultra-Violence."},
-    {1,"M_NMARE",	M_ChooseSkill, 'n', "Nightmare!"}
+    {1,"M_NMARE",	M_ChooseSkill, 'n', "Nightmare?"}
 };
 
 menu_t  NewDef =
@@ -1268,7 +1268,7 @@ void M_NewGame(int choice)
 	
     // Chex Quest disabled the episode select screen, as did Doom II.
 
-    if ((gamemode == commercial && !crispy->havenerve && !crispy->havemaster) || gameversion == exe_chex) // [crispy] NRFTL / The Master Levels
+    if ((gamemode == commercial && !crispy->episodemode && !crispy->havenerve && !crispy->havemaster) || gameversion == exe_chex) // [crispy] NRFTL / The Master Levels
 	M_SetupNextMenu(&NewDef);
     else
 	M_SetupNextMenu(&EpiDef);
@@ -3119,14 +3119,26 @@ void M_Init (void)
     }
 
     // [crispy] NRFTL / The Master Levels
-    if (crispy->havenerve || crispy->havemaster)
+    if (crispy->episodemode || crispy->havenerve || crispy->havemaster)
     {
         int i;
 
         NewDef.prevMenu = &EpiDef;
-        EpisodeMenu[0].alphaKey = 'h';
-        EpisodeMenu[0].alttext = "Hell on Earth";
-        EpiDef.numitems = 1;
+        if(crispy->episodemode){
+            EpisodeMenu[0].alphaKey = 's';
+            EpisodeMenu[0].alttext = "The Space Station";
+            EpisodeMenu[1].alphaKey = 'c';
+            EpisodeMenu[1].alttext = "The City";
+            EpisodeMenu[2].alphaKey = 'h';
+            EpisodeMenu[2].alttext = "Hell";
+            EpiDef.numitems = 4;
+        }
+        else{
+            EpisodeMenu[0].alphaKey = 'h';
+            EpisodeMenu[0].alttext = "Hell on Earth";
+            EpiDef.numitems = 1;
+        }
+        
 
         if (crispy->havenerve)
         {

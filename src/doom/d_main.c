@@ -1686,6 +1686,19 @@ void D_DoomMain (void)
 
     crispy->pistolstart = M_ParmExists("-pistolstart");
 
+  //!
+    // @category game
+    // @category mod
+    //
+    // Automatic pistol start when advancing from one level to the next. At the
+    // beginning of each level, the player's health is reset to 100, their
+    // armor to 0 and their inventory is reduced to the following: pistol,
+    // fists and 50 bullets. This option is not allowed when recording a demo,
+    // playing back a demo or when starting a network game.
+    //
+
+    crispy->episodemode = M_ParmExists("-episodemode");
+
     //!
     // @category mod
     //

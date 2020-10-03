@@ -98,6 +98,7 @@ typedef struct
 	boolean pistolstart;
 	boolean singleplayer;
 	boolean stretchsky;
+	boolean episodemode;
 
 	char *havenerve;
 	char *havemaster;
