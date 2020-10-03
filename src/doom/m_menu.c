@@ -1301,8 +1301,24 @@ void M_ChooseSkill(int choice)
 	M_StartMessage(DEH_String(NIGHTMARE),M_VerifyNightmare,true);
 	return;
     }
-	
-    G_DeferedInitNew(choice,epi+1,1);
+    
+    // Check for -episodemode
+    // TODO: Make sure this only happens for Doom 2.
+    // TODO: Make sure nerve and master episodes work
+    if(crispy->episodemode){
+        if(epi+1 == 1){
+            G_DeferedInitNew(choice,epi+1,1);
+        }
+        else if(epi+1 == 2){
+            G_DeferedInitNew(choice,epi+1,12);
+        }
+        else if(epi+1 == 3){
+            G_DeferedInitNew(choice,epi+1,21);
+        }
+    }
+    else{
+        G_DeferedInitNew(choice,epi+1,1);
+    }
     M_ClearMenus ();
 }
 
