@@ -3131,7 +3131,15 @@ void M_Init (void)
             EpisodeMenu[1].alttext = "The City";
             EpisodeMenu[2].alphaKey = 'h';
             EpisodeMenu[2].alttext = "Hell";
-            EpiDef.numitems = 4;
+            EpiDef.numitems = 3;
+
+            // [crispy] render the episode menu with the HUD font
+            // if the graphics are not from the BFG Edition Doom 2 IWAD or from a PWAD
+            if (gamevariant != bfgedition &&
+                (i = W_CheckNumForName("M_EPI2")) != -1 && W_IsIWADLump(lumpinfo[i]))
+            {
+                EpiDef.lumps_missing = 1;
+            }
         }
         else{
             EpisodeMenu[0].alphaKey = 'h';
