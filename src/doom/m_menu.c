@@ -298,6 +298,7 @@ enum
     ep3,
     ep4,
     ep5, // [crispy] Sigil
+    ep6, // [crispy] Custom Episode 6
     ep_end
 } episodes_e;
 
@@ -308,6 +309,7 @@ menuitem_t EpisodeMenu[]=
     {1,"M_EPI3", M_Episode,'i'},
     {1,"M_EPI4", M_Episode,'t'}
    ,{1,"M_EPI5", M_Episode,'s'} // [crispy] Sigil
+   ,{1,"M_EPI6", M_Episode,'6'} // [crispy] Custom Episode 6
 };
 
 menu_t  EpiDef =
@@ -1296,6 +1298,10 @@ void M_VerifyNightmare(int key)
 
 void M_ChooseSkill(int choice)
 {
+    
+    int customEpCount = 6;
+    int customEpMap[] = {1,6,11,16,21,26};
+
     if (choice == nightmare)
     {
 	M_StartMessage(DEH_String(NIGHTMARE),M_VerifyNightmare,true);
@@ -1304,22 +1310,41 @@ void M_ChooseSkill(int choice)
     
     // Check for -episodemode
     // TODO: Make sure this only happens for Doom 2.
-    if(crispy->episodemode){
-        if(epi+1 == 1){
-            G_DeferedInitNew(choice,1,1);
+    if(crispy->episodemode)
+    {
+        // Default Doom 2 episodes
+        if(customEpCount < 1)
+        {
+            if(epi+1 == 1){
+                G_DeferedInitNew(choice,1,1);
+            }
+            else if(epi+1 == 2){
+                G_DeferedInitNew(choice,1,12);
+            }
+            else if(epi+1 == 3){
+                G_DeferedInitNew(choice,1,21);
+            }
+            // Handle NERVE and Master Levels
+            else{
+                G_DeferedInitNew(choice,epi-1,1);
+            }
         }
-        else if(epi+1 == 2){
-            G_DeferedInitNew(choice,1,12);
-        }
-        else if(epi+1 == 3){
-            G_DeferedInitNew(choice,1,21);
-        }
-        // Handle NERVE and Master Levels
-        else{
-            G_DeferedInitNew(choice,epi-1,1);
+        else
+        {
+            // Custom Episode Map Parameters
+            if(epi+1 < customEpCount+1)
+            {
+                G_DeferedInitNew(choice,1,customEpMap[epi]);
+            }
+            // Handle NERVE and Master Levels
+            else
+            {
+                G_DeferedInitNew(choice,epi-1,1);
+            }
         }
     }
-    else{
+    else
+    {
         G_DeferedInitNew(choice,epi+1,1);
     }
     M_ClearMenus ();
@@ -3142,13 +3167,16 @@ void M_Init (void)
     {
         int i;
 
-        int customEpNumber = 0;
-        //int customEps[4] = {1,7,12,21};
+        // Make sure there are no more than 6 episodes to prevent
+        // visual errors
+        int customEpCount = 6;
 
         NewDef.prevMenu = &EpiDef;
-        if(crispy->episodemode){
-            if(customEpNumber > 0){
-                for (int e = 0; e < customEpNumber; e++)
+        if(crispy->episodemode)
+        {
+            if(customEpCount > 0)
+            {
+                for (int e = 0; e < customEpCount; e++)
                 {
                     char* epName;
                     char ep = (e+1) + '0';
@@ -3160,10 +3188,11 @@ void M_Init (void)
                     EpisodeMenu[e].alphaKey = ep;
                     EpisodeMenu[e].alttext = epName;
                 }
-                EpiDef.numitems = customEpNumber;
+                EpiDef.numitems = customEpCount;
                 
             }
-            else{
+            else
+            {
                 EpisodeMenu[0].alphaKey = 's';
                 EpisodeMenu[0].alttext = "The Space Station";
                 EpisodeMenu[1].alphaKey = 'c';
@@ -3182,14 +3211,15 @@ void M_Init (void)
                 EpiDef.lumps_missing = 1;
             }
         }
-        else{
+        else
+        {
             EpisodeMenu[0].alphaKey = 'h';
             EpisodeMenu[0].alttext = "Hell on Earth";
             EpiDef.numitems = 1;
         }
         
 
-        if (crispy->havenerve)
+        if (crispy->havenerve && customEpCount < 5)
         {
             EpisodeMenu[EpiDef.numitems].alphaKey = 'n';
             EpisodeMenu[EpiDef.numitems].alttext = "No Rest for the Living";
@@ -3204,7 +3234,7 @@ void M_Init (void)
             }
         }
 
-        if (crispy->havemaster)
+        if (crispy->havemaster && customEpCount < 5)
         {
             EpisodeMenu[EpiDef.numitems].alphaKey = 't';
             EpisodeMenu[EpiDef.numitems].alttext = "The Master Levels";
