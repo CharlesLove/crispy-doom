@@ -1728,7 +1728,7 @@ void D_DoomMain (void)
     p = M_CheckParmWithArgs("-e5", 1);
     if (p)
     {
-        crispy->e6 = atoi(myargv[p + 1]);
+        crispy->e5 = atoi(myargv[p + 1]);
         crispy->customEpisodeCount = 5;
     }
     p = M_CheckParmWithArgs("-e6", 1);
