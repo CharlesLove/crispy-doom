@@ -3137,20 +3137,42 @@ void M_Init (void)
         NewDef.prevMenu = &MainDef;
     }
 
-    // [crispy] NRFTL / The Master Levels
+    // [crispy] Episode Mode / NRFTL / The Master Levels
     if (crispy->episodemode || crispy->havenerve || crispy->havemaster)
     {
         int i;
 
+        int customEpNumber = 0;
+        //int customEps[4] = {1,7,12,21};
+
         NewDef.prevMenu = &EpiDef;
         if(crispy->episodemode){
-            EpisodeMenu[0].alphaKey = 's';
-            EpisodeMenu[0].alttext = "The Space Station";
-            EpisodeMenu[1].alphaKey = 'c';
-            EpisodeMenu[1].alttext = "The City";
-            EpisodeMenu[2].alphaKey = 'h';
-            EpisodeMenu[2].alttext = "Hell";
-            EpiDef.numitems = 3;
+            if(customEpNumber > 0){
+                for (int e = 0; e < customEpNumber; e++)
+                {
+                    char* epName;
+                    char ep = (e+1) + '0';
+                    char str[] = "Episode #";
+                    str[8] = ep;
+                    epName = (char*)malloc(strlen(str)+1);
+                    strcpy(epName,str);
+
+                    EpisodeMenu[e].alphaKey = ep;
+                    EpisodeMenu[e].alttext = epName;
+                }
+                EpiDef.numitems = customEpNumber;
+                
+            }
+            else{
+                EpisodeMenu[0].alphaKey = 's';
+                EpisodeMenu[0].alttext = "The Space Station";
+                EpisodeMenu[1].alphaKey = 'c';
+                EpisodeMenu[1].alttext = "The City";
+                EpisodeMenu[2].alphaKey = 'h';
+                EpisodeMenu[2].alttext = "Hell";
+                EpiDef.numitems = 3;
+            }
+            
 
             // [crispy] render the episode menu with the HUD font
             // if the graphics are not from the BFG Edition Doom 2 IWAD or from a PWAD
