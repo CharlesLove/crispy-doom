@@ -1698,6 +1698,45 @@ void D_DoomMain (void)
     //
 
     crispy->episodemode = M_ParmExists("-episodemode");
+    crispy->customEpisodeCount = 0;
+
+    // TODO Clean up
+    p = M_CheckParmWithArgs("-e1", 1);
+    if (p)
+    {
+        crispy->e1 = atoi(myargv[p + 1]);
+        crispy->customEpisodeCount = 1;
+    }
+    p = M_CheckParmWithArgs("-e2", 1);
+    if (p)
+    {
+        crispy->e2 = atoi(myargv[p + 1]);
+        crispy->customEpisodeCount = 2;
+    }
+    p = M_CheckParmWithArgs("-e3", 1);
+    if (p)
+    {
+        crispy->e3 = atoi(myargv[p + 1]);
+        crispy->customEpisodeCount = 3;
+    }
+    p = M_CheckParmWithArgs("-e4", 1);
+    if (p)
+    {
+        crispy->e4 = atoi(myargv[p + 1]);
+        crispy->customEpisodeCount = 4;
+    }
+    p = M_CheckParmWithArgs("-e5", 1);
+    if (p)
+    {
+        crispy->e6 = atoi(myargv[p + 1]);
+        crispy->customEpisodeCount = 5;
+    }
+    p = M_CheckParmWithArgs("-e6", 1);
+    if (p)
+    {
+        crispy->e6 = atoi(myargv[p + 1]);
+        crispy->customEpisodeCount = 6;
+    }
 
     //!
     // @category mod

@@ -1298,9 +1298,37 @@ void M_VerifyNightmare(int key)
 
 void M_ChooseSkill(int choice)
 {
+    int customEpCount = crispy->customEpisodeCount;
+    int customEpMap[customEpCount];
+
+    for (int i = 0; i < customEpCount; i++)
+    {
+        switch (i+1)
+        {
+        case 1:
+            customEpMap[i] = crispy->e1;
+            break;
+        case 2:
+            customEpMap[i] = crispy->e2;
+            break;
+        case 3:
+            customEpMap[i] = crispy->e3;
+            break;
+        case 4:
+            customEpMap[i] = crispy->e4;
+            break;
+        case 5:
+            customEpMap[i] = crispy->e5;
+            break;
+        case 6:
+            customEpMap[i] = crispy->e6;
+            break;
+        
+        default:
+            break;
+        }
+    }
     
-    int customEpCount = 6;
-    int customEpMap[] = {1,6,11,16,21,26};
 
     if (choice == nightmare)
     {
@@ -1315,17 +1343,21 @@ void M_ChooseSkill(int choice)
         // Default Doom 2 episodes
         if(customEpCount < 1)
         {
-            if(epi+1 == 1){
+            if(epi+1 == 1)
+            {
                 G_DeferedInitNew(choice,1,1);
             }
-            else if(epi+1 == 2){
+            else if(epi+1 == 2)
+            {
                 G_DeferedInitNew(choice,1,12);
             }
-            else if(epi+1 == 3){
+            else if(epi+1 == 3)
+            {
                 G_DeferedInitNew(choice,1,21);
             }
             // Handle NERVE and Master Levels
-            else{
+            else
+            {
                 G_DeferedInitNew(choice,epi-1,1);
             }
         }
@@ -1339,7 +1371,19 @@ void M_ChooseSkill(int choice)
             // Handle NERVE and Master Levels
             else
             {
-                G_DeferedInitNew(choice,epi-1,1);
+                // Handle episode counts lower than 3
+                if(customEpCount == 1)
+                {
+                    G_DeferedInitNew(choice,epi+1,1);
+                }
+                else if(customEpCount == 2)
+                {
+                    G_DeferedInitNew(choice,epi,1);
+                }
+                else
+                {
+                    G_DeferedInitNew(choice,epi-1,1);
+                }
             }
         }
     }
@@ -3167,9 +3211,8 @@ void M_Init (void)
     {
         int i;
 
-        // Make sure there are no more than 6 episodes to prevent
-        // visual errors
-        int customEpCount = 6;
+        // Make sure there are no more than 6 episodes to prevent visual errors
+        int customEpCount = crispy->customEpisodeCount;
 
         NewDef.prevMenu = &EpiDef;
         if(crispy->episodemode)
