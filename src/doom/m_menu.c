@@ -298,7 +298,7 @@ enum
     ep3,
     ep4,
     ep5, // [crispy] Sigil
-    ep6, // [crispy] Custom Episode 6
+    // ep6, // [crispy] Custom Episode 6
     ep_end
 } episodes_e;
 
@@ -309,7 +309,7 @@ menuitem_t EpisodeMenu[]=
     {1,"M_EPI3", M_Episode,'i'},
     {1,"M_EPI4", M_Episode,'t'}
    ,{1,"M_EPI5", M_Episode,'s'} // [crispy] Sigil
-   ,{1,"M_EPI6", M_Episode,'6'} // [crispy] Custom Episode 6
+//    ,{1,"M_EPI6", M_Episode,'6'} // [crispy] Custom Episode 6
 };
 
 menu_t  EpiDef =
@@ -1300,35 +1300,35 @@ void M_ChooseSkill(int choice)
 {
     int customEpCount = crispy->customEpisodeCount;
     int customEpMap[customEpCount];
-
-    for (int i = 0; i < customEpCount; i++)
-    {
-        switch (i+1)
+    if(crispy->episodemode){
+        for (int i = 0; i < customEpCount; i++)
         {
-        case 1:
-            customEpMap[i] = crispy->e1;
-            break;
-        case 2:
-            customEpMap[i] = crispy->e2;
-            break;
-        case 3:
-            customEpMap[i] = crispy->e3;
-            break;
-        case 4:
-            customEpMap[i] = crispy->e4;
-            break;
-        case 5:
-            customEpMap[i] = crispy->e5;
-            break;
-        case 6:
-            customEpMap[i] = crispy->e6;
-            break;
-        
-        default:
-            break;
+            switch (i+1)
+            {
+            case 1:
+                customEpMap[i] = crispy->e1;
+                break;
+            case 2:
+                customEpMap[i] = crispy->e2;
+                break;
+            case 3:
+                customEpMap[i] = crispy->e3;
+                break;
+            case 4:
+                customEpMap[i] = crispy->e4;
+                break;
+            case 5:
+                customEpMap[i] = crispy->e5;
+                break;
+            case 6:
+                customEpMap[i] = crispy->e6;
+                break;
+            
+            default:
+                break;
+            }
         }
     }
-    
 
     if (choice == nightmare)
     {
@@ -3188,7 +3188,7 @@ void M_Init (void)
     if (!crispy->haved1e5)
     {
         EpiDef.numitems = 4;
-    }
+    }   
 
     // Versions of doom.exe before the Ultimate Doom release only had
     // three episodes; if we're emulating one of those then don't try
@@ -3240,9 +3240,9 @@ void M_Init (void)
                     case 5:
                         customEpName[e] = crispy->e5Name;
                         break;
-                    case 6:
-                        customEpName[e] = crispy->e6Name;
-                        break;
+                    // case 6:
+                    //     customEpName[e] = crispy->e6Name;
+                    //     break;
                     
                     default:
                         customEpName[e] = "Error";

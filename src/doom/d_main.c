@@ -1686,110 +1686,108 @@ void D_DoomMain (void)
 
     crispy->pistolstart = M_ParmExists("-pistolstart");
 
-  //!
-    // @category game
+    //!
     // @category mod
     //
-    // Automatic pistol start when advancing from one level to the next. At the
-    // beginning of each level, the player's health is reset to 100, their
-    // armor to 0 and their inventory is reduced to the following: pistol,
-    // fists and 50 bullets. This option is not allowed when recording a demo,
-    // playing back a demo or when starting a network game.
+    // Set episode mode for Doom 2 and Doom 2 based PWADs.
     //
 
     crispy->episodemode = M_ParmExists("-episodemode");
     crispy->customEpisodeCount = 0;
 
-    // TODO Clean up and simplify, tons of duplication
-    p = M_CheckParmWithArgs("-e1", 1);
-    if (p)
+    if(crispy->episodemode)
     {
-        crispy->e1 = atoi(myargv[p + 1]);
-        crispy->customEpisodeCount = 1;
-        p = M_CheckParmWithArgs("-e1", 2);
-        if(p && myargv[p + 2][0] != '-')
+        // TODO Clean up and simplify, tons of duplication
+        p = M_CheckParmWithArgs("-e1", 1);
+        if (p)
         {
-            crispy->e1Name = myargv[p + 2];
+            crispy->e1 = atoi(myargv[p + 1]);
+            crispy->customEpisodeCount = 1;
+            p = M_CheckParmWithArgs("-e1", 2);
+            if(p && myargv[p + 2][0] != '-')
+            {
+                crispy->e1Name = myargv[p + 2];
+            }
+            else
+            {
+                crispy->e1Name = "Episode 1";
+            }
         }
-        else
+        p = M_CheckParmWithArgs("-e2", 1);
+        if (p)
         {
-            crispy->e1Name = "Episode 1";
+            crispy->e2 = atoi(myargv[p + 1]);
+            crispy->customEpisodeCount = 2;
+            p = M_CheckParmWithArgs("-e2", 2);
+            if(p && myargv[p + 2][0] != '-')
+            {
+                crispy->e2Name = myargv[p + 2];
+            }
+            else
+            {
+                crispy->e2Name = "Episode 2";
+            }
         }
-    }
-    p = M_CheckParmWithArgs("-e2", 1);
-    if (p)
-    {
-        crispy->e2 = atoi(myargv[p + 1]);
-        crispy->customEpisodeCount = 2;
-        p = M_CheckParmWithArgs("-e2", 2);
-        if(p && myargv[p + 2][0] != '-')
+        p = M_CheckParmWithArgs("-e3", 1);
+        if (p)
         {
-            crispy->e2Name = myargv[p + 2];
+            crispy->e3 = atoi(myargv[p + 1]);
+            crispy->customEpisodeCount = 3;
+            p = M_CheckParmWithArgs("-e3", 2);
+            if(p && myargv[p + 2][0] != '-')
+            {
+                crispy->e3Name = myargv[p + 2];
+            }
+            else
+            {
+                crispy->e3Name = "Episode 3";
+            }
         }
-        else
+        p = M_CheckParmWithArgs("-e4", 1);
+        if (p)
         {
-            crispy->e2Name = "Episode 2";
+            crispy->e4 = atoi(myargv[p + 1]);
+            crispy->customEpisodeCount = 4;
+            p = M_CheckParmWithArgs("-e4", 2);
+            if(p && myargv[p + 2][0] != '-')
+            {
+                crispy->e4Name = myargv[p + 2];
+            }
+            else
+            {
+                crispy->e4Name = "Episode 4";
+            }
         }
-    }
-    p = M_CheckParmWithArgs("-e3", 1);
-    if (p)
-    {
-        crispy->e3 = atoi(myargv[p + 1]);
-        crispy->customEpisodeCount = 3;
-        p = M_CheckParmWithArgs("-e3", 2);
-        if(p && myargv[p + 2][0] != '-')
+        p = M_CheckParmWithArgs("-e5", 1);
+        if (p)
         {
-            crispy->e3Name = myargv[p + 2];
+            crispy->e5 = atoi(myargv[p + 1]);
+            crispy->customEpisodeCount = 5;
+            p = M_CheckParmWithArgs("-e5", 2);
+            if(p && myargv[p + 2][0] != '-')
+            {
+                crispy->e5Name = myargv[p + 2];
+            }
+            else
+            {
+                crispy->e5Name = "Episode 5";
+            }
         }
-        else
-        {
-            crispy->e3Name = "Episode 3";
-        }
-    }
-    p = M_CheckParmWithArgs("-e4", 1);
-    if (p)
-    {
-        crispy->e4 = atoi(myargv[p + 1]);
-        crispy->customEpisodeCount = 4;
-        p = M_CheckParmWithArgs("-e4", 2);
-        if(p && myargv[p + 2][0] != '-')
-        {
-            crispy->e4Name = myargv[p + 2];
-        }
-        else
-        {
-            crispy->e4Name = "Episode 4";
-        }
-    }
-    p = M_CheckParmWithArgs("-e5", 1);
-    if (p)
-    {
-        crispy->e5 = atoi(myargv[p + 1]);
-        crispy->customEpisodeCount = 5;
-        p = M_CheckParmWithArgs("-e5", 2);
-        if(p && myargv[p + 2][0] != '-')
-        {
-            crispy->e5Name = myargv[p + 2];
-        }
-        else
-        {
-            crispy->e5Name = "Episode 5";
-        }
-    }
-    p = M_CheckParmWithArgs("-e6", 1);
-    if (p)
-    {
-        crispy->e6 = atoi(myargv[p + 1]);
-        crispy->customEpisodeCount = 6;
-        p = M_CheckParmWithArgs("-e6", 2);
-        if(p && myargv[p + 2][0] != '-')
-        {
-            crispy->e6Name = myargv[p + 2];
-        }
-        else
-        {
-            crispy->e6Name = "Episode 6";
-        }
+        // p = M_CheckParmWithArgs("-e6", 1);
+        // if (p)
+        // {
+        //     crispy->e6 = atoi(myargv[p + 1]);
+        //     crispy->customEpisodeCount = 6;
+        //     p = M_CheckParmWithArgs("-e6", 2);
+        //     if(p && myargv[p + 2][0] != '-')
+        //     {
+        //         crispy->e6Name = myargv[p + 2];
+        //     }
+        //     else
+        //     {
+        //         crispy->e6Name = "Episode 6";
+        //     }
+        // }
     }
 
     //!
