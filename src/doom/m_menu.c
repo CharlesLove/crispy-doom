@@ -3213,6 +3213,7 @@ void M_Init (void)
 
         // Make sure there are no more than 6 episodes to prevent visual errors
         int customEpCount = crispy->customEpisodeCount;
+        char* customEpName[customEpCount];
 
         NewDef.prevMenu = &EpiDef;
         if(crispy->episodemode)
@@ -3221,15 +3222,35 @@ void M_Init (void)
             {
                 for (int e = 0; e < customEpCount; e++)
                 {
-                    char* epName;
                     char ep = (e+1) + '0';
-                    char str[] = "Episode #";
-                    str[8] = ep;
-                    epName = (char*)malloc(strlen(str)+1);
-                    strcpy(epName,str);
+                    switch (e+1)
+                    {
+                    case 1:
+                        customEpName[e] = crispy->e1Name;
+                        break;
+                    case 2:
+                        customEpName[e] = crispy->e2Name;
+                        break;
+                    case 3:
+                        customEpName[e] = crispy->e3Name;
+                        break;
+                    case 4:
+                        customEpName[e] = crispy->e4Name;
+                        break;
+                    case 5:
+                        customEpName[e] = crispy->e5Name;
+                        break;
+                    case 6:
+                        customEpName[e] = crispy->e6Name;
+                        break;
+                    
+                    default:
+                        customEpName[e] = "Error";
+                        break;
+                    }
 
                     EpisodeMenu[e].alphaKey = ep;
-                    EpisodeMenu[e].alttext = epName;
+                    EpisodeMenu[e].alttext = customEpName[e];
                 }
                 EpiDef.numitems = customEpCount;
                 

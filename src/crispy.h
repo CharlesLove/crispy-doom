@@ -107,6 +107,12 @@ typedef struct
 	int e5;
 	int e6;
 	int customEpisodeCount;
+	char *e1Name;
+	char *e2Name;
+	char *e3Name;
+	char *e4Name;
+	char *e5Name;
+	char *e6Name;
 
 	char *havenerve;
 	char *havemaster;

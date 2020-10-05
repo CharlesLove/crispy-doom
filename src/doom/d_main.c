@@ -1700,42 +1700,96 @@ void D_DoomMain (void)
     crispy->episodemode = M_ParmExists("-episodemode");
     crispy->customEpisodeCount = 0;
 
-    // TODO Clean up
+    // TODO Clean up and simplify, tons of duplication
     p = M_CheckParmWithArgs("-e1", 1);
     if (p)
     {
         crispy->e1 = atoi(myargv[p + 1]);
         crispy->customEpisodeCount = 1;
+        p = M_CheckParmWithArgs("-e1", 2);
+        if(p && myargv[p + 2][0] != '-')
+        {
+            crispy->e1Name = myargv[p + 2];
+        }
+        else
+        {
+            crispy->e1Name = "Episode 1";
+        }
     }
     p = M_CheckParmWithArgs("-e2", 1);
     if (p)
     {
         crispy->e2 = atoi(myargv[p + 1]);
         crispy->customEpisodeCount = 2;
+        p = M_CheckParmWithArgs("-e2", 2);
+        if(p && myargv[p + 2][0] != '-')
+        {
+            crispy->e2Name = myargv[p + 2];
+        }
+        else
+        {
+            crispy->e2Name = "Episode 2";
+        }
     }
     p = M_CheckParmWithArgs("-e3", 1);
     if (p)
     {
         crispy->e3 = atoi(myargv[p + 1]);
         crispy->customEpisodeCount = 3;
+        p = M_CheckParmWithArgs("-e3", 2);
+        if(p && myargv[p + 2][0] != '-')
+        {
+            crispy->e3Name = myargv[p + 2];
+        }
+        else
+        {
+            crispy->e3Name = "Episode 3";
+        }
     }
     p = M_CheckParmWithArgs("-e4", 1);
     if (p)
     {
         crispy->e4 = atoi(myargv[p + 1]);
         crispy->customEpisodeCount = 4;
+        p = M_CheckParmWithArgs("-e4", 2);
+        if(p && myargv[p + 2][0] != '-')
+        {
+            crispy->e4Name = myargv[p + 2];
+        }
+        else
+        {
+            crispy->e4Name = "Episode 4";
+        }
     }
     p = M_CheckParmWithArgs("-e5", 1);
     if (p)
     {
         crispy->e5 = atoi(myargv[p + 1]);
         crispy->customEpisodeCount = 5;
+        p = M_CheckParmWithArgs("-e5", 2);
+        if(p && myargv[p + 2][0] != '-')
+        {
+            crispy->e5Name = myargv[p + 2];
+        }
+        else
+        {
+            crispy->e5Name = "Episode 5";
+        }
     }
     p = M_CheckParmWithArgs("-e6", 1);
     if (p)
     {
         crispy->e6 = atoi(myargv[p + 1]);
         crispy->customEpisodeCount = 6;
+        p = M_CheckParmWithArgs("-e6", 2);
+        if(p && myargv[p + 2][0] != '-')
+        {
+            crispy->e6Name = myargv[p + 2];
+        }
+        else
+        {
+            crispy->e6Name = "Episode 6";
+        }
     }
 
     //!
