@@ -3249,6 +3249,16 @@ void M_Init (void)
                         break;
                     }
 
+                    if(customEpName[e] == NULL)
+                    {
+                        char* epName;
+                        char str[] = "Episode #";
+                        str[8] = ep;
+                        epName = (char*)malloc(strlen(str)+1);
+                        strcpy(epName,str);
+                        customEpName[e] = epName;
+                    }
+
                     EpisodeMenu[e].alphaKey = ep;
                     EpisodeMenu[e].alttext = customEpName[e];
                 }
